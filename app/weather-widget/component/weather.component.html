@@ -1,0 +1,42 @@
+<div class="card"(click) ="toggleUnits()" [ngStyle]="setStyles()">
+<!-- class binding [class.invisible] if the data is not received, it will have the class invisible-->
+    <div class="card-header" [class.invisible] = "!dataReceived">
+        <div class="col-xs-8" id="location-wrapper">
+            <p><i id="location-icon" class="fa fa-map-marker" aria-hidden="true"></i>{{ currentLocation }}</p>
+        </div>
+        <!-- text-xs-right just does the alignment-->
+        <div class="col-xs-4 text-xs-right">
+            <!-- Displaying on Template using Interpolation {{}} and Pipes | (declare caracter min-max) -->
+            <h1>{{ weatherData.temp | tempUnit: currentTempUnit | number: '.0-0'}}&deg;</h1>
+        </div>
+    </div>
+
+    <div class="card-block">
+        <div id="indicator" [hidden]= "dataReceived">
+            <!--Loader when content is not received-->
+            <i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+        <canvas id="icon" [hidden] ="!dataReceived"></canvas>
+        <p>{{ weatherData.summary }}</p>
+    </div>
+
+    <div class="card-footer"[class.invisible] = "!dataReceived">
+        <div class="row" id="detail-row">
+<div class="col-xs-5">
+            <p>Wind</p>
+            <p class="unit-label">{{ weatherData.wind | speedUnit: currentSpeedUnit }}</p>
+        </div>
+        <!--we want for next div to be pushed right ..this offset means that this xs-5 will be pushed after 2 empty columns 5(up),2(empty), 5(this one) = 12 -->
+        <div class="col-xs-5 offset-xs-2">
+            <p>Humidity</p>
+            <p>{{ weatherData.humidity | percent }}</p>
+
+        </div>
+        </div>
+        <div class="row" id="helper-row">
+            <small class="text-muted">click to switch between &deg;f/kph and &deg;c/mph</small>
+        </div>
+    </div>
+
+</div>
